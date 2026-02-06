@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Віта, кошенятко, будеш моєю Валентинкою?</title>
+    <title>Віта, будеш моєю Валентинкою?</title>
 
     <style>
         * {
@@ -21,6 +21,7 @@
             background-color: #fff0f3;
             text-align: center;
             padding: 20px;
+            overflow: hidden;
         }
 
         .container {
@@ -29,27 +30,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .gif-container {
-            width: 100%;
-            margin-bottom: 20px;
+            z-index: 2;
         }
 
         .gif-container img {
-            display: block;
             width: 100%;
             max-width: 220px;
-            height: auto;
-            margin: 0 auto;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
         }
 
         h1 {
             color: #ff4d6d;
             font-size: 1.8rem;
-            line-height: 1.3;
             margin-bottom: 30px;
             min-height: 2.6em;
         }
@@ -67,29 +61,74 @@
             border: none;
             border-radius: 15px;
             cursor: pointer;
-            transition: transform 0.2s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
-            z-index: 5;
+            z-index: 10;
         }
 
         #noBtn {
             background-color: #8a8a8a;
             color: white;
-            font-size: 1rem;
         }
 
         .hidden {
             display: none;
         }
 
-        #successScreen h1 {
-            color: #c9184a;
+        /* FULLSCREEN YES */
+        #yesBtn.fullscreen {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100dvh;
+            border-radius: 0;
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            z-index: 9999;
+        }
+
+        /* HEARTS */
+        .heart {
+            position: fixed;
+            bottom: -30px;
+            font-size: 24px;
+            animation: floatUp 6s linear forwards;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-110vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* CONFETTI */
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            animation: fall 3s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-10vh) rotate(0deg);
+            }
+            to {
+                transform: translateY(110vh) rotate(720deg);
+            }
         }
     </style>
 </head>
@@ -98,12 +137,10 @@
 
 <div class="container" id="questionScreen">
     <div class="gif-container">
-        <img src="assets/cat.gif" alt="Cute Cat">
+        <img src="assets/cat.gif" alt="Cat">
     </div>
 
-    <h1 id="questionText">
-        Віта, кошенятко, будеш моєю Валентинкою? 💖
-    </h1>
+    <h1 id="questionText">Віта, кошенятко, будеш моєю Валентинкою? 💖</h1>
 
     <div class="buttons">
         <button id="yesBtn" onclick="acceptLove()">Так!</button>
@@ -113,13 +150,9 @@
 
 <div class="container hidden" id="successScreen">
     <div class="gif-container">
-        <img src="assets/hug.gif" alt="Hugging Bears">
+        <img src="assets/hug.gif" alt="Love">
     </div>
-
-    <h1>
-        Ура! Я так і знав! <br>
-        Люблю тебе! 😘
-    </h1>
+    <h1>Урааа! Люблю тебе безмежно! 💞</h1>
 </div>
 
 <script>
@@ -132,38 +165,78 @@
     const phrases = [
         "Ні",
         "Ти впевнена?",
-        "Точно-точно?",
-        "Подумай ще раз!",
-        "Ну Віііііта...",
-        "Я буду плакати! 😭",
-        "Ти розбиваєш мені серце",
-        "Я дуже хороший!",
-        "Куплю тобі все, що схочеш!",
-        "Ну натисни вже ТАК! ❤️"
+        "Подумай ще раз",
+        "Ну Вііііта…",
+        "Я засмучусь 😢",
+        "Мені боляче 💔",
+        "Ну будь ласка",
+        "Я хороший!",
+        "Нууу ТАААК ❤️"
     ];
 
     function rejectLove() {
         noClickCount++;
+        noBtn.innerText = phrases[noClickCount] || "ТАААК 😍";
 
-        noBtn.innerText = phrases[noClickCount] || "Ну ТАААК! 😍";
-
-        const scale = Math.min(1 + noClickCount * 0.35, 4);
-        yesBtn.style.transform = `scale(${scale})`;
-
-        noBtn.style.transform = `translateX(${noClickCount * 8}px)`;
-
-        if (noClickCount === 3) {
-            questionText.innerText = "Ну не будь такою вредною! 😊";
-        }
-        if (noClickCount === 6) {
-            questionText.innerText = "Ого, ти серйозно? 💔";
+        if (noClickCount >= phrases.length - 1) {
+            yesBtn.classList.add('fullscreen');
+        } else {
+            yesBtn.style.transform = `scale(${1 + noClickCount * 0.35})`;
         }
     }
 
     function acceptLove() {
+        playSound();
         document.getElementById('questionScreen').classList.add('hidden');
         document.getElementById('successScreen').classList.remove('hidden');
-        document.body.style.backgroundColor = "#ffccd5";
+        startHearts();
+        launchConfetti();
+    }
+
+    /* ❤️ HEARTS */
+    function startHearts() {
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = 20 + Math.random() * 20 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }, 300);
+    }
+
+    /* 🎉 CONFETTI */
+    function launchConfetti() {
+        for (let i = 0; i < 120; i++) {
+            const conf = document.createElement('div');
+            conf.className = 'confetti';
+            conf.style.left = Math.random() * 100 + 'vw';
+            conf.style.backgroundColor = `hsl(${Math.random()*360},100%,70%)`;
+            conf.style.animationDuration = 2 + Math.random() * 2 + 's';
+            document.body.appendChild(conf);
+            setTimeout(() => conf.remove(), 4000);
+        }
+    }
+
+    /* 🔊 SOUND (NO FILES) */
+    function playSound() {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.4);
+
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.6);
     }
 </script>
 
