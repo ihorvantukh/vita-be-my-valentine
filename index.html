@@ -1,112 +1,109 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Віта, кошенятко, будеш моєю Валентинкою?</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Віта, кошенятко, будеш моєю Валентинкою?</title>
 
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-body {
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    min-height: 100dvh; /* FIX для мобільних */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff0f3;
-    text-align: center;
-    padding: 20px;
-}
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff0f3;
+            text-align: center;
+            padding: 20px;
+        }
 
-.container {
-    width: 100%;
-    max-width: 480px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.gif-container {
-    width: 100%;
-    margin-bottom: 20px;
-}
+        .gif-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
 
-.gif-container img {
-    display: block;
-    width: 100%;
-    max-width: 220px;
-    height: auto;              /* КРИТИЧНО */
-    margin: 0 auto;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-}
+        .gif-container img {
+            display: block;
+            width: 100%;
+            max-width: 220px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
 
-h1 {
-    color: #ff4d6d;
-    font-size: 1.8rem;
-    line-height: 1.3;
-    margin-bottom: 30px;
-    min-height: 2.6em;
-}
+        h1 {
+            color: #ff4d6d;
+            font-size: 1.8rem;
+            line-height: 1.3;
+            margin-bottom: 30px;
+            min-height: 2.6em;
+        }
 
-.buttons {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-button {
-    padding: 15px 25px;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    -webkit-tap-highlight-color: transparent;
-}
+        button {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            -webkit-tap-highlight-color: transparent;
+        }
 
-#yesBtn {
-    background-color: #ff4d6d;
-    color: white;
-    z-index: 5;
-}
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            z-index: 5;
+        }
 
-#noBtn {
-    background-color: #8a8a8a;
-    color: white;
-    font-size: 1rem;
-}
+        #noBtn {
+            background-color: #8a8a8a;
+            color: white;
+            font-size: 1rem;
+        }
 
-.hidden {
-    display: none;
-}
+        .hidden {
+            display: none;
+        }
 
-#successScreen h1 {
-    color: #c9184a;
-}
-</style>
+        #successScreen h1 {
+            color: #c9184a;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container" id="questionScreen">
     <div class="gif-container">
-        <img
-            src="https://media.tenor.com/K2sE9t6N8JAAAAAi/mocha-mochi.gif"
-            alt="Cute Cat"
-            loading="eager"
-            decoding="async"
-            referrerpolicy="no-referrer">
+        <img src="assets/cat.gif" alt="Cute Cat">
     </div>
 
-    <h1 id="questionText">Віта, кошенятко, будеш моєю Валентинкою? 💖</h1>
+    <h1 id="questionText">
+        Віта, кошенятко, будеш моєю Валентинкою? 💖
+    </h1>
 
     <div class="buttons">
         <button id="yesBtn" onclick="acceptLove()">Так!</button>
@@ -116,55 +113,59 @@ button {
 
 <div class="container hidden" id="successScreen">
     <div class="gif-container">
-        <img
-            src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
-            alt="Hugging Bears"
-            loading="eager"
-            decoding="async"
-            referrerpolicy="no-referrer">
+        <img src="assets/hug.gif" alt="Hugging Bears">
     </div>
-    <h1>Ура! Я так і знав! <br> Люблю тебе! 😘</h1>
+
+    <h1>
+        Ура! Я так і знав! <br>
+        Люблю тебе! 😘
+    </h1>
 </div>
 
 <script>
-let noClickCount = 0;
+    let noClickCount = 0;
 
-const yesBtn = document.getElementById('yesBtn');
-const noBtn = document.getElementById('noBtn');
-const questionText = document.getElementById('questionText');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const questionText = document.getElementById('questionText');
 
-const phrases = [
-    "Ні",
-    "Ти впевнена?",
-    "Точно-точно?",
-    "Подумай ще раз!",
-    "Ну Віііііта...",
-    "Я буду плакати! 😭",
-    "Ти розбиваєш мені серце",
-    "Я дуже хороший!",
-    "Куплю тобі все, що схочеш!",
-    "Ну натисни вже ТАК! ❤️"
-];
+    const phrases = [
+        "Ні",
+        "Ти впевнена?",
+        "Точно-точно?",
+        "Подумай ще раз!",
+        "Ну Віііііта...",
+        "Я буду плакати! 😭",
+        "Ти розбиваєш мені серце",
+        "Я дуже хороший!",
+        "Куплю тобі все, що схочеш!",
+        "Ну натисни вже ТАК! ❤️"
+    ];
 
-function rejectLove() {
-    noClickCount++;
+    function rejectLove() {
+        noClickCount++;
 
-    noBtn.innerText = phrases[noClickCount] || "Ну ТАААК! 😍";
+        noBtn.innerText = phrases[noClickCount] || "Ну ТАААК! 😍";
 
-    let scale = Math.min(1 + noClickCount * 0.35, 4);
-    yesBtn.style.transform = `scale(${scale})`;
+        const scale = Math.min(1 + noClickCount * 0.35, 4);
+        yesBtn.style.transform = `scale(${scale})`;
 
-    noBtn.style.transform = `translateX(${noClickCount * 8}px)`;
+        noBtn.style.transform = `translateX(${noClickCount * 8}px)`;
 
-    if (noClickCount === 3) questionText.innerText = "Ну не будь такою вредною! 😊";
-    if (noClickCount === 6) questionText.innerText = "Ого, ти серйозно? 💔";
-}
+        if (noClickCount === 3) {
+            questionText.innerText = "Ну не будь такою вредною! 😊";
+        }
+        if (noClickCount === 6) {
+            questionText.innerText = "Ого, ти серйозно? 💔";
+        }
+    }
 
-function acceptLove() {
-    document.getElementById('questionScreen').classList.add('hidden');
-    document.getElementById('successScreen').classList.remove('hidden');
-    document.body.style.backgroundColor = "#ffccd5";
-}
+    function acceptLove() {
+        document.getElementById('questionScreen').classList.add('hidden');
+        document.getElementById('successScreen').classList.remove('hidden');
+        document.body.style.backgroundColor = "#ffccd5";
+    }
 </script>
+
 </body>
 </html>
