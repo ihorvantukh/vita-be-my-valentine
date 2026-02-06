@@ -62,7 +62,7 @@
             border-radius: 15px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.4s ease;
+            transition: transform 0.2s ease, all 0.4s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -81,7 +81,7 @@
             display: none;
         }
 
-        /* FULLSCREEN YES */
+        /* ===== FULLSCREEN YES BUTTON ===== */
         #yesBtn.fullscreen {
             position: fixed;
             inset: 0;
@@ -92,13 +92,12 @@
             z-index: 9999;
         }
 
-        /* HEARTS */
+        /* ❤️ HEARTS */
         .heart {
             position: fixed;
             bottom: -30px;
-            font-size: 24px;
             animation: floatUp 6s linear forwards;
-            opacity: 0.8;
+            opacity: 0.85;
             pointer-events: none;
         }
 
@@ -113,22 +112,18 @@
             }
         }
 
-        /* CONFETTI */
+        /* 🎉 CONFETTI */
         .confetti {
             position: fixed;
             width: 8px;
             height: 8px;
-            animation: fall 3s linear forwards;
+            animation: fall linear forwards;
             pointer-events: none;
         }
 
         @keyframes fall {
-            from {
-                transform: translateY(-10vh) rotate(0deg);
-            }
-            to {
-                transform: translateY(110vh) rotate(720deg);
-            }
+            from { transform: translateY(-10vh) rotate(0deg); }
+            to { transform: translateY(110vh) rotate(720deg); }
         }
     </style>
 </head>
@@ -152,7 +147,7 @@
     <div class="gif-container">
         <img src="assets/hug.gif" alt="Love">
     </div>
-    <h1>Урааа! Люблю тебе безмежно! 💞</h1>
+    <h1>Ура! Люблю тебе безмежно! 💞</h1>
 </div>
 
 <script>
@@ -165,24 +160,32 @@
     const phrases = [
         "Ні",
         "Ти впевнена?",
-        "Подумай ще раз",
-        "Ну Вііііта…",
-        "Я засмучусь 😢",
-        "Мені боляче 💔",
-        "Ну будь ласка",
+        "Точно-точно?",
+        "Подумай ще раз!",
+        "Ну Віііііта...",
+        "Я буду плакати 😭",
+        "Ти розбиваєш серце 💔",
         "Я хороший!",
-        "Нууу ТАААК ❤️"
+        "Ну натисни вже ТАК ❤️",
+        "Нуууу ТАААК 😍"
     ];
 
     function rejectLove() {
         noClickCount++;
         noBtn.innerText = phrases[noClickCount] || "ТАААК 😍";
 
-        if (noClickCount >= phrases.length - 1) {
+        const finalStage = phrases.length - 1;
+
+        if (noClickCount >= finalStage) {
             yesBtn.classList.add('fullscreen');
+            yesBtn.style.transform = 'none';
         } else {
-            yesBtn.style.transform = `scale(${1 + noClickCount * 0.35})`;
+            const scale = 1 + noClickCount * 0.35;
+            yesBtn.style.transform = `scale(${scale})`;
         }
+
+        if (noClickCount === 3) questionText.innerText = "Ну не будь такою вредною 😊";
+        if (noClickCount === 6) questionText.innerText = "Я ж стараюсь 💔";
     }
 
     function acceptLove() {
@@ -200,7 +203,7 @@
             heart.className = 'heart';
             heart.innerText = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = 20 + Math.random() * 20 + 'px';
+            heart.style.fontSize = 18 + Math.random() * 24 + 'px';
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 6000);
         }, 300);
@@ -209,13 +212,13 @@
     /* 🎉 CONFETTI */
     function launchConfetti() {
         for (let i = 0; i < 120; i++) {
-            const conf = document.createElement('div');
-            conf.className = 'confetti';
-            conf.style.left = Math.random() * 100 + 'vw';
-            conf.style.backgroundColor = `hsl(${Math.random()*360},100%,70%)`;
-            conf.style.animationDuration = 2 + Math.random() * 2 + 's';
-            document.body.appendChild(conf);
-            setTimeout(() => conf.remove(), 4000);
+            const c = document.createElement('div');
+            c.className = 'confetti';
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.backgroundColor = `hsl(${Math.random()*360},100%,70%)`;
+            c.style.animationDuration = 2 + Math.random() * 2 + 's';
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 4000);
         }
     }
 
