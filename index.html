@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Віта, кошенятко, будеш моєю Валентинкою?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fce4ec; /* Ніжно-рожевий фон */
+            margin: 0;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .gif-container img {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: #4caf50; /* Зелений */
+            color: white;
+            font-weight: bold;
+        }
+
+        #noBtn {
+            background-color: #f44336; /* Червоний */
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Клас для фінального екрану */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="questionScreen">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/K2sE9t6N8JAAAAAi/mocha-mochi.gif" alt="Cute Cat">
+        </div>
+        <h1>Віта, кошенятко, будеш моєю Валентинкою? 💖</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="acceptLove()">Так!</button>
+            <button id="noBtn" onclick="rejectLove()">Ні</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="successScreen">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Hugging Bears">
+        </div>
+        <h1>Ура! Я так і знав! Люблю тебе! 😘</h1>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+        const phrases = [
+            "Ні", 
+            "Ти впевнена?", 
+            "Точно-точно?", 
+            "Подумай ще раз!", 
+            "Ну будь ласка...", 
+            "Я буду плакати!", 
+            "Ти розбиваєш мені серце ;(", 
+            "Я дуже хороший!", 
+            "Ну натисни вже ТАК!"
+        ];
+
+        function rejectLove() {
+            noClickCount++;
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+
+            // Змінюємо текст на кнопці "Ні"
+            if (noClickCount < phrases.length) {
+                noBtn.innerText = phrases[noClickCount];
+            } else {
+                noBtn.innerText = "Ну ТААААК!";
+            }
+
+            // Збільшуємо кнопку "Так"
+            let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize * 1.3) + "px";
+            
+            // Збільшуємо паддінги (розмір самої кнопки)
+            let currentPadding = parseFloat(window.getComputedStyle(yesBtn).padding);
+            yesBtn.style.padding = (currentPadding * 1.2) + "px " + (currentPadding * 1.5) + "px";
+        }
+
+        function acceptLove() {
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('successScreen').classList.remove('hidden');
+            
+            // Запуск конфеті (простий ефект)
+            document.body.style.backgroundColor = "#ffc1e3";
+        }
+    </script>
+</body>
+</html>
